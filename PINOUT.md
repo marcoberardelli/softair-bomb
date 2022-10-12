@@ -20,3 +20,8 @@
              |          MISO SCK RST         |
              | NANO-V3                       |
              +-------------------------------+
+
+
+
+
+Credit to: https://github.com/busyDuckman/ascii-art-arduinos
