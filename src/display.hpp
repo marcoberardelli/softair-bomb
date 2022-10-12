@@ -11,6 +11,7 @@ void print_row_lcd(String text, uint8_t row);
 void print_lcd(String first_row, String second_row);
 void clear_lcd();
 void lcd_off();
+void lcd_on();
 void init_segment_display();
 void clear_segment();
 void segment_off();

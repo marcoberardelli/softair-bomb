@@ -43,6 +43,9 @@ void lcd_off() {
     lcd.noBacklight();
 }
 
+void lcd_on() {
+    lcd.backlight();
+}
 
 void init_segment_display() {
     segment.setBrightness(0x0f);

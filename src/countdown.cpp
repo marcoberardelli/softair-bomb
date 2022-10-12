@@ -17,7 +17,9 @@ void clock_handler() {
 
 void blink_segment() {
     segment_off();
-    ITimer1.setCount();
+
+    //TODO: check if i can modify the timer when is running
+    //ITimer1.setCount(); 
 }
 
 void init_timer() {

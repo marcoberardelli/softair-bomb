@@ -73,7 +73,7 @@ void start_simple_game(time_t duration){
         print_lcd("Error timer", "-Duration");
         return;
     }
-
+    lcd_off();
     while(true) {
         if(did_game_tick()) {
             time_t game_time = get_remaining_gametime();
@@ -93,6 +93,7 @@ void start_simple_game(time_t duration){
         LowPower.idle(SLEEP_FOREVER, ADC_OFF, TIMER2_OFF, TIMER1_ON, TIMER0_OFF, 
                 SPI_OFF, USART0_OFF, TWI_OFF);
     }
+    lcd_on();
 }
 
 void start_domination_game(time_t duration){
