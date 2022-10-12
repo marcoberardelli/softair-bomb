@@ -17,9 +17,8 @@ void clock_handler() {
 
 void blink_segment() {
     segment_off();
-
     //TODO: check if i can modify the timer when is running
-    //ITimer1.setCount(); 
+    //ITimer1.setCount(20); 
 }
 
 void init_timer() {
@@ -47,6 +46,7 @@ int8_t start_segment_timer() {
     if(!ITimer1.attachInterruptInterval(SEGMENT_BLINK_DURATION_MS, clock_handler)) {
         return -1;
     }
+    return 0;
 }
 
 void stop_timer() {

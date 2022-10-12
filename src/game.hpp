@@ -10,7 +10,8 @@
 enum GameMode {
     SIMPLE,
     BOMB,
-    DOMINATION
+    DOMINATION,
+    AUDIO
 };
 
 class GameModeQueue {
@@ -32,6 +33,6 @@ public:
 void start_simple_game(time_t duration);
 void start_domination_game(time_t duration);
 void start_bomb_game(time_t duration);
-
+void start_audio_gamemode();
 
 #endif
