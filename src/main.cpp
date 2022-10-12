@@ -1,10 +1,12 @@
 #include <Arduino.h>
 
 #include <LowPower.h>
-#include "countdown.hpp"
+#include "timer.hpp"
 #include "button.hpp"
 #include "display.hpp"
+#include "gamemode.hpp"
 #include "game.hpp"
+
 /**
  * void(* resetFunc) (void) = 0;
  * Holy Bible of power saving: http://www.gammon.com.au/forum/?id=11497
@@ -64,6 +66,12 @@ void loop() {
             Serial.println("Started Simple game");
             #endif
             start_simple_game(time);
+            break;
+         case AUDIO:
+            #ifdef DEBUG
+            Serial.println("Started audio mode");
+            #endif
+            start_audio_gamemode();
             break;
         default:
             break;

@@ -2,7 +2,7 @@
 #include <LiquidCrystal_I2C.h>
 #include <TM1637Display.h>
 #include "display.hpp"
-#include "countdown.hpp"
+#include "timer.hpp"
 
 static LiquidCrystal_I2C lcd(0x27, 20, 4);
 static TM1637Display segment(CLK_SEGMENT, DIO_SEGMENT);

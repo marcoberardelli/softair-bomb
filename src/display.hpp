@@ -4,7 +4,7 @@
 #define CLK_SEGMENT 4
 #define DIO_SEGMENT 5
 
-#include "countdown.hpp"
+#include "timer.hpp"
 
 void init_lcd_display();
 void print_row_lcd(String text, uint8_t row);

@@ -2,53 +2,13 @@
 #include <LowPower.h>
 
 #include "game.hpp"
-#include "countdown.hpp"
+#include "gamemode.hpp"
+#include "timer.hpp"
 #include "display.hpp"
 #include "button.hpp"
 
 #define PSW_LENGHT 6
-#define SIZE 4
 
-GameModeQueue::GameModeQueue() {
-    gamemodes[0] = SIMPLE;
-    gamemodes[1] = BOMB;
-    gamemodes[2] = DOMINATION;
-    gamemodes[3] = AUDIO;
-    index = 0;
-}
-
-GameMode GameModeQueue::Next() {
-    index++;
-    index = index % SIZE;
-    return gamemodes[index];
-}
-
-GameMode GameModeQueue::Previous() {
-    index--;
-    if (index < 0) {
-        index = SIZE-1;
-    }
-    return gamemodes[index];
-}
-
-GameMode GameModeQueue::Current() {
-    return gamemodes[index];
-}
-
-String GameModeQueue::GetCurrentAsString() {
-    switch (gamemodes[index])
-    {
-    case SIMPLE:
-        return "Semplice";
-    case BOMB:
-        return "Bomba";
-    case DOMINATION:
-        return "Dominio";
-    default:
-        break;
-    }
-    return "";
-}
 
 void _end_game(GameMode gamemode, int winner) {
     
@@ -64,10 +24,17 @@ void _end_game(GameMode gamemode, int winner) {
     }
 }
 
-String _read_password() {
-    String psw;
-    //TODO read password
-    return psw;
+void _read_password(char *password) {
+    #ifdef DEBUG
+    Serial.println("Reading password");
+    #endif
+
+    uint8_t len = 0;
+    while(len < PSW_LENGHT) {
+
+        LowPower.idle(SLEEP_FOREVER, ADC_OFF, TIMER2_OFF, TIMER1_ON, TIMER0_OFF, 
+                SPI_OFF, USART0_OFF, TWI_OFF);
+    }
 }
 
 void start_simple_game(time_t duration){
@@ -145,8 +112,8 @@ void start_domination_game(time_t duration){
 void start_bomb_game(time_t duration) {
 
     //LCD.print(Select a password)
-
-    String password = _read_password();
+    char password[PSW_LENGHT];
+    _read_password(password);
 
     if (start_game_timer(duration) < 0) {
         print_lcd("Error timer", "-Duration");

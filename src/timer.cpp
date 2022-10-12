@@ -1,4 +1,4 @@
-#include "countdown.hpp"
+#include "timer.hpp"
 #include <TimerInterrupt.h>
 #include "game.hpp"
 #include "display.hpp"

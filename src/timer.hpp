@@ -1,5 +1,5 @@
-#ifndef COUNTDOWN_HPP
-#define COUNTDOWN_HPP
+#ifndef TIMER_HPP
+#define TIMER_HPP
 #include "Arduino.h"
 
 #define USE_TIMER_1 true
@@ -10,7 +10,6 @@
 
 #define GAME_DURATION_SECOND 1
 #define SEGMENT_BLINK_DURATION_MS 5000
-
 
 typedef struct {
     uint8_t minutes;

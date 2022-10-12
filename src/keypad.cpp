@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "countdown.hpp"
+#include "timer.hpp"
 
 time_t select_time(){
     time_t time = {5,30};
