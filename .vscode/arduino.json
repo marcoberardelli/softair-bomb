@@ -1,5 +1,0 @@
-{
-    "port": "COM9",
-    "configuration": "cpu=atmega328",
-    "board": "arduino:avr:nano"
-}
