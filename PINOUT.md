@@ -6,7 +6,7 @@
              | [ ]V.ref     ___    SS/D10[ ]~|
              | [ ]A0       / N \       D9[X]~| RED BUTTON
              | [ ]A1      /  A  \      D8[X] | BLUE BUTTON
-             | [ ]A2      \  N  /      D7[ ] |
+             | [ ]A2      \  N  /      D7[X] | KPAD INT
              | [ ]A3       \_0_/       D6[ ]~|
     LCD KPAD | [X]A4/SDA               D5[X]~| DIO 7SEGMENT
     LCD KPAD | [X]A5/SCL               D4[X] | CLK 7SEGMENT

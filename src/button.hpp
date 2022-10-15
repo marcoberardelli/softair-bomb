@@ -1,5 +1,6 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
+#define EI_NOTEXTERNAL
 
 enum PressedButton {
     NONE,

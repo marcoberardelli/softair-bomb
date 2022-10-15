@@ -6,6 +6,7 @@
 #include "timer.hpp"
 #include "display.hpp"
 #include "button.hpp"
+#include "keypad.hpp"
 
 #define PSW_LENGHT 6
 
@@ -28,9 +29,11 @@ void _read_password(char *password) {
     #ifdef DEBUG
     Serial.println("Reading password");
     #endif
+    enable_keypad();
 
     uint8_t len = 0;
     while(len < PSW_LENGHT) {
+
 
         LowPower.idle(SLEEP_FOREVER, ADC_OFF, TIMER2_OFF, TIMER1_ON, TIMER0_OFF, 
                 SPI_OFF, USART0_OFF, TWI_OFF);

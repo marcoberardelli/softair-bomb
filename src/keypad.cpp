@@ -1,10 +1,40 @@
 #include <Arduino.h>
+#include "Wire.h"
+#include "I2CKeyPad.h"
 #include "timer.hpp"
+#include "panic.hpp"
 
-time_t select_time(){
-    time_t time = {5,30};
-    #if DEBUG
-    time = time_t{5,30};
-    #endif
-    return time;
+#define KEYPAD_ADDRESS 0x20
+#define KEYPAD_INT_PIN 7
+// maybe need 4.7kresistor for i2c (probably lcd already has it)
+
+volatile bool has_key;
+I2CKeyPad keyPad(KEYPAD_ADDRESS);
+char keys[] = "123A456B789C*0#DNF";  // N = NoKey, F = Fail (e.g. >1 keys pressed)
+
+void _read_key_INT() {
+    has_key = true;
+    
+}
+
+void enable_keypad() {
+    Wire.begin(); // TODO: check if useless
+    pinMode(KEYPAD_INT_PIN, INPUT_PULLUP);
+    //enableInterrupt(KEYPAD_INT_PIN, _read_key_INT, FALLING);
+    attachInterrupt(KEYPAD_INT_PIN, _read_key_INT, FALLING);
+    has_key = false;
+
+    Wire.begin();
+    if (keyPad.begin() == false)
+    {
+        panic("ERR KEYPAD INIT");
+    }
+  Wire.setClock(100000); //TODO: check if useless
+}
+bool did_keypad_read() {
+    return has_key;
+}
+
+uint8_t read_key() {
+    return keyPad.getKey();
 }

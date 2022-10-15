@@ -20,7 +20,7 @@ void setup() {
     init_lcd_display();
     init_segment_display();
     init_timer();
-
+    
 
     enable_menu_btns();
     gamemodes = GameModeQueue();
