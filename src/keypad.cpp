@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include "Wire.h"
-#include "timer.hpp"
-#include "panic.hpp"
+#include "halt.hpp"
 #include "keypad.hpp"
 
 
 // maybe need 4.7kresistor for i2c (probably lcd already has it)
 I2CKeyPad keyPad(KEYPAD_ADDRESS);
+volatile bool has_key;
 char keys[] = "123A456B789C*0#DNF";  // N = NoKey, F = Fail (e.g. >1 keys pressed)
 
 void enable_keypad() {
@@ -21,7 +21,7 @@ void enable_keypad() {
     {
         panic("ERR KEYPAD INIT");
     }
-  Wire.setClock(100000); //TODO: check if useless
+    Wire.setClock(100000); //TODO: check if useless
 }
 
 void read_key_INT() {

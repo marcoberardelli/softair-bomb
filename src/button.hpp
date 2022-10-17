@@ -2,10 +2,9 @@
 #define BUTTON_HPP
 
 
-//#define BLUE_BTN_PIN 8
-//#define RED_BTN_PIN 9
-#define BLUE_BTN_PIN A1
-#define RED_BTN_PIN A2
+#define BLUE_BTN_PIN 8
+#define RED_BTN_PIN 9
+
 
 enum PressedButton {
     NONE,
@@ -13,6 +12,7 @@ enum PressedButton {
     RED
 };
 
+void enable_menu_RB_btns();
 void red_btn_INT();
 void blue_btn_INT();
 PressedButton read_button();

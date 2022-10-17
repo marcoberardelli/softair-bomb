@@ -20,13 +20,11 @@ volatile static uint8_t cont = 0;
 
 volatile static PressedButton pressed_button = NONE;
 
-void enable_menu_btns() {
+void enable_menu_RB_btns() {
     pinMode(BLUE_BTN_PIN, INPUT_PULLUP);
     pinMode(RED_BTN_PIN, INPUT_PULLUP);
     PCICR |= 0b00000001; // Enable port B
     PCMSK0 |= 0b00000011; // Enable PCINT0 (D8) and PCINT1 (D9)
-    //enableInterrupt(RED_BTN_PIN, red_btn_INT, FALLING);
-    //enableInterrupt(BLUE_BTN_PIN,blue_btn_INT, FALLING);
 }
 
 void red_btn_INT(void) {
@@ -51,6 +49,10 @@ void clear_button_state() {
     pressed_button = NONE;
 }
 
-IRQ(PCINT0_vect) {
-  
+ISR(PCINT0_vect) {
+  if(!digitalRead(RED_BTN_PIN)) {
+    red_btn_INT();
+  } else if(!digitalRead(BLUE_BTN_PIN)) {
+    blue_btn_INT();
+  }
 }

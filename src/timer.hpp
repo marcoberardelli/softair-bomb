@@ -17,9 +17,9 @@ typedef struct {
 }time_t;
 
 void init_timer();
-int8_t start_game_timer(time_t time);
-int8_t start_game_timer(uint8_t minutes, uint8_t seconds);
-int8_t start_segment_timer();
+void start_game_timer(time_t time);
+void start_game_timer(uint8_t minutes, uint8_t seconds);
+void start_segment_timer();
 void stop_timer();
 time_t get_remaining_gametime();
 bool did_game_tick();

@@ -1,13 +1,12 @@
 #include <Arduino.h>
 #include <LowPower.h>
-#include <AltSoftSerial.h>
 #include "game.hpp"
 #include "gamemode.hpp"
 #include "timer.hpp"
 #include "display.hpp"
 #include "button.hpp"
 #include "keypad.hpp"
-#include "serial.hpp"
+
 
 #define PSW_LENGHT 6
 
@@ -28,7 +27,7 @@ void _end_game(GameMode gamemode, int winner) {
 
 void _read_password(char *password) {
     #ifdef DEBUG
-    println("Reading password");
+    Serial.println("Reading password");
     #endif
 
     uint8_t len = 0;
@@ -40,14 +39,14 @@ void _read_password(char *password) {
             password[len] = read_key();
         }
     }
+
+    #ifdef DEBUG
+    Serial.println("End Reading password");
+    #endif
 }
 
 void start_simple_game(time_t duration){
-    if (start_game_timer(duration) < 0) {
-        print_lcd("Error timer", "-Duration");
-        return;
-    }
-
+    start_game_timer(duration);
     lcd_off();
     while(true) {
         if(did_game_tick()) {
@@ -55,7 +54,7 @@ void start_simple_game(time_t duration){
             print_time_remaining(game_time);
             if (game_time.minutes == 0 && game_time.seconds == 0) {
                 #ifdef DEBUG
-                println("End Simple game");
+                Serial.println("End Simple game");
                 #endif
                 stop_timer();
                 _end_game(SIMPLE, 0);
@@ -71,20 +70,16 @@ void start_simple_game(time_t duration){
 }
 
 void start_domination_game(time_t duration){
-    if (start_game_timer(duration) < 0) {
-        print_lcd("Error timer", "-Duration");
-        return;
-    }
-
     uint8_t team = BLUE_TEAM;
 
+    start_game_timer(duration);
     while(true) {
         if(did_game_tick()) {
             time_t game_time = get_remaining_gametime();
             print_time_remaining(game_time);
             if (game_time.minutes == 0 && game_time.seconds == 0) {
                 #ifdef DEBUG
-                println("End Domination game");
+                Serial.println("End Domination game");
                 #endif
                 stop_timer();
                 _end_game(BOMB, BLUE_TEAM);
@@ -96,13 +91,13 @@ void start_domination_game(time_t duration){
         PressedButton btn = read_button();
         if(btn == RED && team == BLUE_TEAM) {
             #ifdef DEBUG
-            println("Red team hold");
+            Serial.println("Red team hold");
             #endif
             team = RED_TEAM;
             //play audio
         } else if (btn == BLUE && team == RED_TEAM) {
             #ifdef DEBUG
-            println("Blue team hold");
+            Serial.println("Blue team hold");
             #endif
             team = BLUE_TEAM;
             //play audio
@@ -116,14 +111,12 @@ void start_domination_game(time_t duration){
 
 void start_bomb_game(time_t duration) {
 
-    //LCD.print(Select a password)
-    char password[PSW_LENGHT];
-    _read_password(password);
+    
+    print_lcd("Password:", "");
+    //char password[PSW_LENGHT];
+    //_read_password(password);
 
-    if (start_game_timer(duration) < 0) {
-        print_lcd("Error timer", "-Duration");
-        return;
-    }
+    start_game_timer(duration);
 
     while(true) {
         if(did_game_tick()) {
@@ -131,7 +124,7 @@ void start_bomb_game(time_t duration) {
             print_time_remaining(game_time);
             if (game_time.minutes == 0 && game_time.seconds == 0) {
                 #ifdef DEBUG
-                println("End Bomb game");
+                Serial.println("End Bomb game");
                 #endif
                 stop_timer();
                 _end_game(BOMB, BLUE_TEAM);
