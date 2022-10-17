@@ -2,6 +2,7 @@
 #include <TimerInterrupt.h>
 #include "game.hpp"
 #include "display.hpp"
+#include "serial.hpp"
 
 volatile time_t game_time;
 volatile static bool timer_tick;
@@ -37,7 +38,7 @@ int8_t start_game_timer(uint8_t minutes, uint8_t seconds) {
         return -1;
     }
     #ifdef DEBUG
-    Serial.println("Started timer");
+    println("Started timer");
     #endif
     return 0;
 }

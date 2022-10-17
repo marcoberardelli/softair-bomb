@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <avr/interrupt.h>
 #include "button.hpp"
-#include <EnableInterrupt.h>
 /**
  * @brief 
  * Pinout: https://www.circuito.io/blog/arduino-uno-pinout/
@@ -13,8 +12,7 @@
  *  Pin Change Interrupt Request 2 (pins D0 to D7)  (PCINT2_vect)
  * 
  */
-#define BLUE_BTN_PIN 8
-#define RED_BTN_PIN 9
+
 #define DEBOUNCE_TIME_MS 50UL
 
 volatile unsigned long last_pressed_time = 0;
@@ -22,28 +20,27 @@ volatile static uint8_t cont = 0;
 
 volatile static PressedButton pressed_button = NONE;
 
+void enable_menu_btns() {
+    pinMode(BLUE_BTN_PIN, INPUT_PULLUP);
+    pinMode(RED_BTN_PIN, INPUT_PULLUP);
+    PCICR |= 0b00000001; // Enable port B
+    PCMSK0 |= 0b00000011; // Enable PCINT0 (D8) and PCINT1 (D9)
+    //enableInterrupt(RED_BTN_PIN, red_btn_INT, FALLING);
+    //enableInterrupt(BLUE_BTN_PIN,blue_btn_INT, FALLING);
+}
 
-void __red_btn_pressed(void) {
+void red_btn_INT(void) {
   pressed_button = RED;
   for(int i = 0; i < 10; i++) {
     delayMicroseconds(5000);
   }
 }
 
-void __blue_btn_pressed(void) {
+void blue_btn_INT(void) {
   pressed_button = BLUE;
   for(int i = 0; i < 10; i++) {
     delayMicroseconds(5000);
   }
-}
-
-void enable_menu_btns() {
-    //PCICR |= 0b00000001; // Enable port B
-    //PCMSK0 |= 0b00000011; // Enable PCINT0 (D8) and PCINT1 (D9)
-    pinMode(BLUE_BTN_PIN, INPUT_PULLUP);
-    pinMode(RED_BTN_PIN, INPUT_PULLUP);
-    enableInterrupt(RED_BTN_PIN, __red_btn_pressed, FALLING);
-    enableInterrupt(BLUE_BTN_PIN,__blue_btn_pressed, FALLING);
 }
 
 PressedButton read_button() {
@@ -52,4 +49,8 @@ PressedButton read_button() {
 
 void clear_button_state() {
     pressed_button = NONE;
+}
+
+IRQ(PCINT0_vect) {
+  
 }

@@ -6,16 +6,19 @@
 #include "display.hpp"
 #include "gamemode.hpp"
 #include "game.hpp"
+#include "interrupt.hpp"
+
+#include "serial.hpp"
+
 
 /**
- * void(* resetFunc) (void) = 0;
  * Holy Bible of power saving: http://www.gammon.com.au/forum/?id=11497
 */
 GameModeQueue gamemodes;
 
 void setup() {
     
-    Serial.begin(9600);
+    init_serial(9600);
 
     init_lcd_display();
     init_segment_display();
@@ -23,11 +26,12 @@ void setup() {
     
 
     enable_menu_btns();
+    enable_keypad();
     gamemodes = GameModeQueue();
     print_lcd("Modalita", gamemodes.GetCurrentAsString());
 
     #ifdef DEBUG
-    Serial.println("Finish setup");
+    println("Finish setup");
     #endif
 }
 
@@ -35,14 +39,14 @@ void loop() {
     PressedButton btn = read_button();
     if( btn == RED) {
         #ifdef DEBUG
-        Serial.println("Pressed RED button");
+        println("Pressed RED button");
         #endif
         gamemodes.Next();
         print_row_lcd(gamemodes.GetCurrentAsString(), 1);
     } else if (btn == BLUE) { // game is selected, need time then start
 
         #ifdef DEBUG
-        Serial.println("Pressed BLUE button");
+        println("Pressed BLUE button");
         #endif
 
         time_t time = {0,30}; //TODO: select timer
@@ -50,26 +54,26 @@ void loop() {
         {
         case BOMB:
             #ifdef DEBUG
-            Serial.println("Stard Bomb game");
+            println("Stard Bomb game");
             #endif
             start_bomb_game(time);
             break;
        
         case DOMINATION:
             #ifdef DEBUG
-            Serial.println("Started Domination game");
+            println("Started Domination game");
             #endif
             start_domination_game(time);
             break;
         case SIMPLE:
             #ifdef DEBUG
-            Serial.println("Started Simple game");
+            println("Started Simple game");
             #endif
             start_simple_game(time);
             break;
          case AUDIO:
             #ifdef DEBUG
-            Serial.println("Started audio mode");
+            println("Started audio mode");
             #endif
             start_audio_gamemode();
             break;
