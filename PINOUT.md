@@ -7,7 +7,7 @@
                 | [ ]A0       / N \       D9[ ]~| 
                 | [ ]A1      /  A  \      D8[ ] | 
                 | [ ]A2      \  N  /      D7[X] | KPADINT PCINT23
-   PCINT11 KPAD | [X]A3       \_0_/       D6[ ]~|
+                | [ ]A3       \_0_/       D6[ ]~|
        LCD KPAD | [X]A4/SDA               D5[X]~| DIO 7SEGMENT
        LCD KPAD | [X]A5/SCL               D4[X] | CLK 7SEGMENT
                 | [ ]A6              INT1/D3[X]~| RED BUTTON
