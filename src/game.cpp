@@ -35,7 +35,9 @@ void _read_password(char *password) {
         
         LowPower.idle(SLEEP_FOREVER, ADC_OFF, TIMER2_OFF, TIMER1_ON, TIMER0_OFF, 
                 SPI_OFF, USART0_OFF, TWI_OFF);
+        Serial.println("Waked");
         if(did_keypad_read()) {
+            Serial.println("keypad read");
             password[len] = read_key();
         }
     }
@@ -113,9 +115,9 @@ void start_bomb_game(time_t duration) {
 
     
     print_lcd("Password:", "");
-    //char password[PSW_LENGHT];
-    //_read_password(password);
-
+    char password[PSW_LENGHT];
+    _read_password(password);
+    
     start_game_timer(duration);
 
     while(true) {

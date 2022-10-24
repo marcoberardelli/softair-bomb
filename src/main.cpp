@@ -21,10 +21,17 @@ void setup() {
     init_timer();
     
 
-    enable_menu_RB_btns();
+    init_RB_btns(true);
+    delay(500);
     //enable_keypad();
     gamemodes = GameModeQueue();
+    #ifdef DEBUG
+    Serial.println("create queue");
+    #endif
     print_lcd("Modalita", gamemodes.GetCurrentAsString());
+    #ifdef DEBUG
+    Serial.println(gamemodes.GetCurrentAsString());
+    #endif
 
     #ifdef DEBUG
     Serial.println("Finish setup");
@@ -78,6 +85,9 @@ void loop() {
         }
     }
     clear_button_state();
+    #ifdef DEBUG
+    Serial.println("Enter sleep...");
+    #endif
     
     LowPower.idle(SLEEP_FOREVER, ADC_OFF, TIMER2_OFF, TIMER1_ON, TIMER0_OFF, 
                 SPI_OFF, USART0_OFF, TWI_OFF);
